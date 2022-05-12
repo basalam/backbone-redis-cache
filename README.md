@@ -11,7 +11,7 @@ pip install backbone-redis-cache --extra-index-url https://repo.basalam.dev/arti
 #### Usage
 
 ```python
-from backbone.redis_cache.redis_cache import RedisCache
+from backbone_redis_cache import RedisCache
 import aioredis
 
 cache = RedisCache(
