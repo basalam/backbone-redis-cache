@@ -1,5 +1,5 @@
 import json
-from typing import Dict, Any, Optional, List
+from typing import Dict, Any, Optional, List, Callable
 import aioredis
 
 
@@ -7,10 +7,14 @@ class RedisCache:
     def __init__(
             self,
             connection : aioredis.Redis,
-            prefix: str = ""
+            prefix: str = "",
+            serializer : Optional[Callable] = json.dumps,
+            deserializer : Optional[Callable] = json.loads,
     ) -> None:
         self.__connection = connection
         self.__prefix = prefix
+        self.__deserialize = deserializer
+        self.__serialize = serializer
 
     async def get(self, key: str, default=None) -> Any:
         result: str = await self.__connection.get(self.__prefix + key)
@@ -41,9 +45,3 @@ class RedisCache:
     async def flush(self):
         await self.__connection.flushdb()
         await self.__connection.flushall()
-
-    def __serialize(self, value: Any) -> str:
-        return json.dumps(value)
-
-    def __deserialize(self, value: str) -> Any:
-        return json.loads(value)
