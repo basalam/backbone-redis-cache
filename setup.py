@@ -1,7 +1,9 @@
+import os
+
 import setuptools
 setuptools.setup(
     name="backbone-redis-cache",
-    version="0.0.2",
+    version=os.environ['CI_COMMIT_TAG'],
     author="Mojtabaa Habibain",
     author_email="mojtabaa.hn@gmail.com",
     description="Python Utilities & Basalam Micro-Services SDK",

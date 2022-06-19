@@ -41,15 +41,5 @@ pip install pytest
 python -m pytest
 ```
 
-#### Development
-
-```bash
-# install requirements
-pip install build twine
-
-# Build package
-make build
-
-# Push to basalam repository
-make push
-```
+#### Changelog
+- 0.0.3 Now build and push are done using gitlab-ci
