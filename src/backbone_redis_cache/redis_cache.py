@@ -26,6 +26,9 @@ class RedisCache:
     async def set(self, key: str, value: Any, seconds: Optional[int] = None) -> None:
         await self.__connection.set(self.__prefix + key, self.__serialize(value), ex=seconds)
 
+    async def inc_by(self, key: str, increment: Optional[int] = 1) -> None:
+        await self.__connection.incrby(self.__prefix + key, increment)
+
     async def mset(self, dictionary: Dict[str, Any], seconds: Optional[int] = None) -> None:
         pipe = self.__connection.pipeline()
         for key, value in dictionary.items():
