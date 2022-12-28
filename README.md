@@ -21,6 +21,7 @@ cache = RedisCache(
 
 await cache.set("key", "value", seconds=10 * 60)
 await cache.get("key", default="Nevermind")
+await cache.inc_by("key")
 
 await cache.mset({'key1': "value1",'key2': "value2"}, seconds=15 * 60)
 await cache.mget(["key1", "key2"], default="Whatever")
@@ -43,3 +44,4 @@ python -m pytest
 
 #### Changelog
 - 0.0.3 Now build and push are done using gitlab-ci
+- 0.0.5 increment value of key
