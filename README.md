@@ -26,7 +26,7 @@ await cache.mset({'key1': "value1",'key2': "value2"}, seconds=15 * 60)
 await cache.mget(["key1", "key2"], default="Whatever")
 
 await cache.cset("key", 1, seconds=60)
-await cache.mget("key")
+await cache.cget("key")
 
 await cache.exists("key")
 await cache.forget("key")
