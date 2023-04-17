@@ -27,9 +27,9 @@ class RedisCache:
         await self._connection.set(self._prefix + key, self._serialize(value), ex=seconds)
 
     async def cset(self, key: str, increment: int = 1, seconds: Optional[int] = None) -> None:
-        number = await self.__connection.incrby(self.__prefix + key, increment)
+        number = await self._connection.incrby(self._prefix + key, increment)
         if number == increment:
-            await self.__connection.pexpire(self.__prefix + key, seconds * 1000)
+            await self._connection.pexpire(self._prefix + key, seconds * 1000)
 
     async def mset(self, dictionary: Dict[str, Any], seconds: Optional[int] = None) -> None:
         pipe = self._connection.pipeline()
@@ -45,7 +45,7 @@ class RedisCache:
         ]
 
     async def cget(self, key: str) -> int:
-        number = await self.__connection.get(self.__prefix + key)
+        number = await self._connection.get(self._prefix + key)
         return 0 if number is None else int(number)
 
     async def forget(self, key) -> None:
