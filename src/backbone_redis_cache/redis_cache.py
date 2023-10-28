@@ -6,10 +6,10 @@ import aioredis
 class RedisCache:
     def __init__(
             self,
-            connection : aioredis.Redis,
+            connection: aioredis.Redis,
             prefix: str = "",
-            serializer : Optional[Callable] = json.dumps,
-            deserializer : Optional[Callable] = json.loads,
+            serializer: Optional[Callable] = json.dumps,
+            deserializer: Optional[Callable] = json.loads,
     ) -> None:
         self._connection = connection
         self._prefix = prefix
@@ -54,3 +54,12 @@ class RedisCache:
     async def flush(self):
         await self._connection.flushdb()
         await self._connection.flushall()
+
+    async def hset(self, name, key, value):
+        await self._connection.hset(name=name, key=key, value=value)
+
+    async def hget(self, name, key):
+        await self._connection.hget(name=name, key=key)
+
+    async def expire(self, name, _time):
+        await self._connection.expire(name=name, time=_time)
