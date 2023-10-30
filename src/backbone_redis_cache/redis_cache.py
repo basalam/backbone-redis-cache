@@ -59,7 +59,7 @@ class RedisCache:
         await self._connection.hset(name=name, key=key, value=value)
 
     async def hget(self, name, key):
-        await self._connection.hget(name=name, key=key)
+        return await self._connection.hget(name=name, key=key)
 
     async def expire(self, name, _time):
         await self._connection.expire(name=name, time=_time)
