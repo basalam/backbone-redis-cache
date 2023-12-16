@@ -1,12 +1,12 @@
 import json
 from typing import Dict, Any, Optional, List, Callable
-import aioredis
+from redis.asyncio import Redis
 
 
 class RedisCache:
     def __init__(
             self,
-            connection: aioredis.Redis,
+            connection: Redis,
             prefix: str = "",
             serializer: Optional[Callable] = json.dumps,
             deserializer: Optional[Callable] = json.loads,

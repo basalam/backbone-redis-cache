@@ -12,10 +12,11 @@ pip install backbone-redis-cache --extra-index-url https://repo.basalam.dev/arti
 
 ```python
 from backbone_redis_cache import RedisCache
-import aioredis
+from redis.asyncio import Redis
+
 
 cache = RedisCache(
-    connection=aioredis.Redis(host="127.0.0.1", port=6379),
+    connection=Redis(host="127.0.0.1", port=6379),
     prefix="ORDER_CACHE."
 )
 
