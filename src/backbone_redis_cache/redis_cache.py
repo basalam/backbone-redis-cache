@@ -1,6 +1,10 @@
 import json
 from typing import Dict, Any, Optional, List, Callable
-from redis.asyncio import Redis
+
+try:
+    from aioredis import Redis
+except Exception as ex:
+    from redis.asyncio import Redis
 
 
 class RedisCache:
