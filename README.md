@@ -49,3 +49,4 @@ python -m pytest
 #### Changelog
 - 0.0.3 Now build and push are done using gitlab-ci
 - 0.0.5 set & get a counter thanks to abdi.zbn@gmail.com
+- 0.0.10 added scan method thanks to ali.alimohammadi@basalam.com
