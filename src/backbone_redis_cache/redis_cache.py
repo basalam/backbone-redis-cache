@@ -72,7 +72,7 @@ class RedisCache:
         return_ = []
         cursor = '0'
         while cursor:
-            cursor, keys = await self.__connection.scan(cursor=cursor, match=self.__prefix + match)
+            cursor, keys = await self._connection.scan(cursor=cursor, match=self._prefix + match)
             return_.extend(keys)
             if cursor == b'0':
                 break
