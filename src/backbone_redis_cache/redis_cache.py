@@ -67,3 +67,13 @@ class RedisCache:
 
     async def expire(self, name, _time):
         await self._connection.expire(name=self._prefix + name, time=_time)
+
+    async def scan(self, match: Optional[str] = "*") -> List:
+        return_ = []
+        cursor = '0'
+        while cursor:
+            cursor, keys = await self.__connection.scan(cursor=cursor, match=self.__prefix + match)
+            return_.extend(keys)
+            if cursor == b'0':
+                break
+        return return_
