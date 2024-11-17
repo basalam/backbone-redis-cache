@@ -1,6 +1,6 @@
 import setuptools
 setuptools.setup(
-    name="backbone-redis-cache",
+    name="basalam.backbone-redis-cache",
     author="Mojtabaa Habibain",
     author_email="mojtabaa.hn@gmail.com",
     description="Python Utilities & Basalam Micro-Services SDK",
