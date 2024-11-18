@@ -11,7 +11,7 @@ pip install backbone-redis-cache
 #### Usage
 
 ```python
-from backbone_redis_cache import RedisCache
+from basalam.backbone_redis_cache import RedisCache
 from redis.asyncio import Redis
 
 
