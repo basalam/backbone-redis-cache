@@ -20,7 +20,7 @@ setup(
     setuptools_git_versioning={"enabled": True},
     setup_requires=["setuptools-git-versioning"],
     install_requires=[
-        "redis==4.4.4",
+        "redis>=4.4.4",
         "aioredis==2.0.1"
     ]
 )
