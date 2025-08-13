@@ -104,3 +104,8 @@ class RedisCache:
             if cursor == b'0':
                 break
         return return_
+
+    async def unlink(self, keys: List[str]) -> None:
+        prefixed_keys = [self._prefix + key for key in keys]
+        self._trigger("UNLINK", prefixed_keys)
+        await self._connection.unlink(*prefixed_keys)
