@@ -53,6 +53,14 @@ class RedisCache:
         if number == increment:
             await self._connection.pexpire(self._prefix + key, seconds * 1000)
 
+    async def incr(self, key: str, amount: int = 1) -> int:
+        self._trigger("INCR", key)
+        return await self._connection.incrby(self._prefix + key, amount)
+
+    async def decr(self, key: str, amount: int = 1) -> int:
+        self._trigger("DECR", key)
+        return await self._connection.decrby(self._prefix + key, amount)
+
     async def mset(self, dictionary: Dict[str, Any], seconds: Optional[int] = None) -> None:
         self._trigger("MSET", list(dictionary.keys()))
         pipe = self._connection.pipeline()
