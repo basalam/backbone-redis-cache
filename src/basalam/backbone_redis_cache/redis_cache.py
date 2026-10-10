@@ -1,10 +1,13 @@
 import json
+import logging
 from typing import Dict, Any, Optional, List, Callable
 
 try:
     from aioredis import Redis
 except Exception as ex:
     from redis.asyncio import Redis
+
+logger = logging.getLogger(__name__)
 
 
 class RedisCache:
@@ -34,10 +37,19 @@ class RedisCache:
         for callback in self.__callbacks:
             callback(operation, details)
 
+    def _safe_deserialize(self, key: str, value: Any, default=None) -> Any:
+        if value is None:
+            return default
+        try:
+            return self._deserialize(value)
+        except Exception:
+            logger.exception("Failed to deserialize cached value for key %r", self._prefix + key)
+            return default
+
     async def get(self, key: str, default=None) -> Any:
         self._trigger("GET", key)
         result: str = await self._connection.get(self._prefix + key)
-        return self._deserialize(result) if result is not None else default
+        return self._safe_deserialize(key, result, default)
 
     async def exists(self, key: str) -> bool:
         self._trigger("EXISTS", key)
@@ -72,8 +84,8 @@ class RedisCache:
         self._trigger("MGET", keys)
         results = await self._connection.mget([self._prefix + key for key in keys])
         return [
-            self._deserialize(result) if result is not None else default
-            for result in results
+            self._safe_deserialize(key, result, default)
+            for key, result in zip(keys, results)
         ]
 
     async def cget(self, key: str) -> int:
